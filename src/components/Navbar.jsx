@@ -6,8 +6,7 @@ function Navbar() {
   return (
     <div>
       Navbar
-      {/* <Button>Hii</Button> */}
-      <Button>Hii</Button>
+      {/* <Button>Hii</Button> */} 
     </div>
   );
 }

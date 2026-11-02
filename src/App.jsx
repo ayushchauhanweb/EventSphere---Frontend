@@ -3,17 +3,19 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./page/NotFoundPage";
 import { House } from "lucide-react";
+import Home from "./page/HomePage";
 
 function App() {
-
   return (
-    <div>
-      <House />
+    <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-stone-900 selection:bg-orange-100 selection:text-[#E65100]">
       <Navbar />
+      <div className="flex-1">
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/" element={<Home/>} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </div>
       <Footer />
     </div>
   );

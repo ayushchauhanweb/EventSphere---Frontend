@@ -21,8 +21,9 @@ export default function Home() {
         );
         setFeaturedEvents(data);
         console.log(data);
-      } catch (error) {} finally{
-        setIsLoading(false)
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
       }
     }
     getFeaturedEvents();

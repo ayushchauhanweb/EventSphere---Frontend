@@ -10,8 +10,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Link } from "react-router";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+import { Button } from "../ui/button";
+import { Badge } from "@/components/ui/badge";
 import { formatEventDate, formatPrice } from "@/lib/utils";
 
 export function FeaturedCrousel({ events }) {

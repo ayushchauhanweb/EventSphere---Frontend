@@ -5,6 +5,8 @@ import NotFoundPage from "./page/NotFoundPage";
 import { House } from "lucide-react";
 import Home from "./page/HomePage";
 import { useEffect } from "react";
+import EventDetailsPage from "./page/EventDetailsPage";
+import { Toaster, toast } from "sonner";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -21,11 +23,22 @@ function App() {
       <div className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-
+          <Route path="/events/:slug" element={<EventDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
       <Footer />
+      <Toaster
+        richColors
+        toastOptions={{
+          style: {
+            borderRadius: "1rem",
+            border: "1px solid #EBE8DF",
+            fontFamily: '"Plus Jakarta Sans", sans-serif',
+            fontSize: "13px",
+          },
+        }}
+      />
     </div>
   );
 }

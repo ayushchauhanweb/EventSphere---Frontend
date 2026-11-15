@@ -16,9 +16,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { FeaturedCrousel } from "@/components/events/FeaturedCrousel";
-import axios from "axios";
 import EventCard from "@/components/events/eventsCard";
 import Skeleton from "@/components/common/Skeleton";
+import api from "@/lib/axios";
 
 function getCategoryIconComponent(category) {
   const icon = category?.icon || "";
@@ -108,28 +108,18 @@ export default function Home() {
     async function loadHomePage() {
       setIsLoading(true);
       try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/events/featured",
-        );
+        let data = await api.get("/api/events/featured");
         setFeaturedEvents(data);
       } catch (error) {}
 
       try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/categories",
-        );
+        let data = await api.get("/api/categories");
         setCategories(data);
       } catch (error) {}
 
       try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/events?limit=8&sort=startDate&order=asc",
+        let data = await api.get(
+          "/api/events?limit=8&sort=startDate&order=asc",
         );
         setTrendingEvents(data);
       } catch (error) {}
@@ -284,7 +274,7 @@ export default function Home() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <Skeleton />
+              <Skeleton key={i} />
             ))}
           </div>
         ) : (

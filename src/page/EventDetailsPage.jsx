@@ -1,4 +1,5 @@
 import EventReviewSection from "@/components/events/EventReviewSection";
+import { handleFavorite } from "@/components/events/eventsCard";
 import api from "@/lib/axios";
 import {
   formatEventDate,
@@ -7,6 +8,7 @@ import {
   getDaysRemaining,
 } from "@/lib/utils";
 import {
+  Bookmark,
   Calendar,
   Check,
   Clock,
@@ -17,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router";
 import { toast } from "sonner";
 
@@ -32,7 +35,12 @@ export default function EventDetailsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [event, setEvent] = useState([]);
   const [reviews, setReviews] = useState([]);
-
+  const dispatch = useDispatch();
+  const isFavorite = useSelector((state) =>
+    state.favorites.items.some(
+      (e) => (e.id || e._id) === (event.id || event._id),
+    ),
+  );
   useEffect(() => {
     async function fetchEvents() {
       setIsLoading(true);
@@ -97,10 +105,17 @@ export default function EventDetailsPage() {
 
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700"
+            onClick={(e) => handleFavorite(e, event, dispatch, isFavorite)}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+              isFavorite
+                ? "bg-orange-50 border-orange-200 text-[#E65100]"
+                : "bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700"
+            }`}
           >
-            <span>🔖</span>
-            <span>Save</span>
+            <Bookmark
+              className={`w-3.5 h-3.5 ${isFavorite ? "fill-[#E65100]" : ""}`}
+            />
+            <span>{isFavorite ? "Saved" : "Save"}</span>
           </button>
         </div>
       </div>
